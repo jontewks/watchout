@@ -1,5 +1,11 @@
-/* global d3 */
+/* global d3, _ */
 
+//TODO
+//
+//- Improve collision accounting
+//- Improve aesthetics
+//- CSS3 animations on the enemies
+//
 
 // ===== BOARD INFORMATION =======================
 var board = {
@@ -7,7 +13,7 @@ var board = {
   height: 500,
   enemies: 15,
   itemRadius: 12,
-  gameSpeed: 1000,
+  gameSpeed: 1500,
   score: 0,
   highScore: 0,
   collisions: 0
@@ -16,7 +22,7 @@ var board = {
 board.object = d3.select('body').append('svg')
   .attr('width', board.width)
   .attr('height', board.height)
-  .style('border', 'solid #4d4d4d 3px');
+  .style({'border': 'solid #000 2px', 'background-image' : 'url(blue-sky.jpg)', 'box-shadow' : '2px 2px 5px #000'});
 
 board.scoring = function() {
   setInterval(function() {
@@ -49,15 +55,17 @@ board.checkCollision = function(allEnemies) {
   });
 };
 
+board.throttledCheck = _.throttle(function() {
+  d3.selectAll('.collisions span').data([board.collisions++]).text(function(d) { return d;});
+}, board.gameSpeed);
+
 board.collision = function() {
   if(board.score > board.highScore) {
     board.highScore = board.score;
     d3.selectAll('.high span').data([board.highScore]).text(function(d) { return d;});
   }
   board.score = 0;
-  window.setTimeout( function() {
-    d3.selectAll('.collisions span').data([board.collisions++]).text(function(d) { return d;});
-  }, 200);
+  board.throttledCheck();
 };
 
 
@@ -65,6 +73,7 @@ board.collision = function() {
 
 
 // ===== ENEMIES OBJECT AND INSTANTIATION TOOLS =======================
+//
 var enemies = {
   index: [],
   genX: function() {
@@ -84,7 +93,7 @@ enemies.moveEnemies = function() {
       .attr('cx', enemies.genX)
       .attr('cy', enemies.genY);
 
-  }, board.gameSpeed);
+  }, board.gameSpeed * 1.5);
 };
 
 var Enemy = function(x, y) {
