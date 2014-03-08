@@ -1,9 +1,17 @@
 body {
-  background-color: #4d4d4d;
+  background-image: url(lib/grass.jpg);
+  background-size: 200px 200px;
 }
 
 svg {
-  background-color: #fff;
+  /*background-color: #fff;*/
+}
+
+.container {
+  width: 750px;
+  height: 500px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .scoreboard div {
@@ -19,21 +27,23 @@ svg {
   height: 20px;
   padding: 10px 18px;
 }
-/*
-.flying-left {
-  background-image: url(bird-left-sprites.jpg);
 
+span.enemy {
+  background-image: url(lib/squirrel.png);
+  height: 32px;
+  width: 32px;
 }
 
-.flying-right {
-  background-image: url(bird-sprites.jpg);
-  -webkit-animation: flyright 2s steps(12) infinite;
-  height: 30px;
-  width: 60px;
+.move-left {
+  -webkit-animation: moveRight 0.4s steps(3) infinite;
 }
 
-@-webkit-keyframes flyright {
-  from { background-position: 0px;}
-  to { background-position: -615px;}
+.move-right {
+  -webkit-animation: moveRight 0.4s steps(3) infinite;
 }
-*/
+
+@-webkit-keyframes moveRight {
+  from { background-position: 0 128px;}
+  to { background-position: -96px 128px;}
+}
+

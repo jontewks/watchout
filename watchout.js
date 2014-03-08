@@ -19,10 +19,10 @@ var board = {
   collisions: 0
 };
 
-board.object = d3.select('body').append('svg')
+board.object = d3.select('.container').append('svg')
   .attr('width', board.width)
   .attr('height', board.height)
-  .style({'border': 'solid #000 2px', 'background-image' : 'url(blue-sky.jpg)', 'box-shadow' : '2px 2px 5px #000'});
+  .style({'border-top': 'solid #fff 12px', 'border-bottom': 'solid #fff 12px', 'border-right' : 'solid #fff 2px', 'border-left' : 'solid #fff 2px', 'box-shadow' : '6px 10px 10px #000'});
 
 board.scoring = function() {
   setInterval(function() {
