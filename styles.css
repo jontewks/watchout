@@ -1,12 +1,3 @@
-body {
-  background-image: url(lib/grass.jpg);
-  background-size: 200px 200px;
-}
-
-svg {
-  /*background-color: #fff;*/
-}
-
 .container {
   width: 750px;
   height: 500px;

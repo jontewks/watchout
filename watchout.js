@@ -1,13 +1,5 @@
-/* global d3, _ */
-
-//TODO
-//
-//- Improve collision accounting
-//- Improve aesthetics
-//- CSS3 animations on the enemies
-//
-
 // ===== BOARD INFORMATION =======================
+
 var board = {
   width: 750,
   height: 500,
@@ -47,7 +39,7 @@ board.checkCollision = function(allEnemies) {
     eY = this.cy.animVal.value;
     xDiff = eX-pX;
     yDiff = eY-pY;
-    separation = Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2));
+    separation = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 
     if(separation < radiusSum) {
       board.collision();
@@ -69,11 +61,8 @@ board.collision = function() {
 };
 
 
-
-
-
 // ===== ENEMIES OBJECT AND INSTANTIATION TOOLS =======================
-//
+
 var enemies = {
   index: [],
   genX: function() {
@@ -112,6 +101,7 @@ var makeEnemies = function(num) {
 
 
 // ===== PLAYER OBJECT AND INSTANTIATION TOOLS =======================
+
 var player = {
   index: []
 };
@@ -130,11 +120,13 @@ Player.prototype.makePlayer = function() {
 
 
 // ===== START 'EM UP =======================
+
 makeEnemies(board.enemies);
 Player.prototype.makePlayer();
 
 
 // ===== DATA BINDING =======================
+
 board.object.selectAll('.enemy')
   .data(enemies.index)
   .enter().append('circle')
@@ -142,7 +134,6 @@ board.object.selectAll('.enemy')
   .attr('cx', function(d) { return d.x; })
   .attr('cy', function(d) { return d.y; })
   .attr('r', board.itemRadius);
-
 
 board.object.selectAll('.player')
   .data(player.index)
@@ -160,13 +151,9 @@ board.object.on('mousemove', function() {
     .attr('cy', mouseCoords[1]);
 });
 
-window.setInterval(function() {
+d3.timer(function() {
   board.checkCollision(d3.selectAll('.enemy'));
-},10);
+});
 
 enemies.moveEnemies();
 board.scoring();
-
-board.checkCollision(d3.selectAll('.enemy'));
-
-
